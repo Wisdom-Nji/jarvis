@@ -1,0 +1,15 @@
+#simple
+- How many patients were entered yesterday
+- How many SMS messages sent you yesterday
+
+
+#Complex
+- How many SMS messages a day on average
+- How many SMS messages a day for MTN/Orange/Nextel users
+
+
+#God Level
+- Should this user have received SMS messages yesterday
+
+
+##Something very important, the level of questions you can ask depends on the amount of data which has been made available
