@@ -7,25 +7,32 @@ import csv;
 class Node:
 	def __init__(self, data):
 		self.data = data;
-
+	
 
 class Nodes:
-
-	def __init__(self, csv_data ):
-		'convert from DictReader to List'
-		headers = csv_data.fieldnames
-
+	def __init__(self, dataset):
 		self.dataset = {}
+		for header in dataset:
+			self.nodes = []
+			for data in dataset[header]:
+				self.nodes.append(Node(data))
+			self.dataset[header] = self.nodes
+
+		for names in self.dataset['name']:
+			print(names.data)
+
+def csv_data_parser(csv_data ):
+	'convert from DictReader to List'
+	headers = csv_data.fieldnames
+
+	dataset = {}
+	for header in headers:
+		dataset[header] = []
+	for columns in csv_data:
 		for header in headers:
-			self.dataset[header] = []
-		for columns in csv_data:
-			for header in headers:
-				entire_row = columns[header]
-				for column in entire_row:
-					self.dataset[header].append(Node(column))
-				
-		#print(self.dataset)
-		#print(self.dataset['name'])
+			entire_row = columns[header]
+			dataset[header].append(entire_row)
+	return dataset
 
 
 def read_csv_file( filename ):
@@ -37,6 +44,6 @@ def read_csv_file( filename ):
 
 
 csv_data = read_csv_file( "dataset/Users.csv" )
+dataset = csv_data_parser(csv_data)
 
-
-nodes = Nodes( csv_data )
+nodes = Nodes(dataset)
