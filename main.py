@@ -1,25 +1,43 @@
 #!/bin/python
 
 
-import csv;
+import csv
 
+
+class Data:
+	def __init__(self, data):
+		self.data = data
 
 class Node:
-	def __init__(self, data):
-		self.data = data;
-	
+	'this are columns in database'
+	def __init__(self, name, dataset):
+		self.name = name
+		self.dataset = []
+		for data in dataset:
+			_data = Data(data)
+			self.dataset.append(_data)
 
-class Nodes:
+	def raw_print(self, tab_length="\t"):
+		datalist = []
+		for data in self.dataset:
+			datalist.append(data.data);
+		print(tab_length, datalist)
+class Table:
 	def __init__(self, dataset):
-		self.dataset = {}
+		self.nodeset = []
 		for header in dataset:
-			self.nodes = []
-			for data in dataset[header]:
-				self.nodes.append(Node(data))
-			self.dataset[header] = self.nodes
-
+			node = Node(header, dataset[header])
+			self.nodeset.append(node)
+		'''
 		for names in self.dataset['name']:
 			print(names.data)
+		'''
+
+	def raw_print(self):
+		for node in self.nodeset:
+			print(Node.__name__, "=> ", node.name)
+			node.raw_print()
+			print()
 
 def csv_data_parser(csv_data ):
 	'convert from DictReader to List'
@@ -36,8 +54,8 @@ def csv_data_parser(csv_data ):
 
 
 def read_csv_file( filename ):
-	csv_file = open(filename);
-	csv_data = csv.DictReader( csv_file );
+	csv_file = open(filename)
+	csv_data = csv.DictReader( csv_file )
 
 	#print(csv_data.fieldnames
 	return csv_data
@@ -46,4 +64,5 @@ def read_csv_file( filename ):
 csv_data = read_csv_file( "dataset/Users.csv" )
 dataset = csv_data_parser(csv_data)
 
-nodes = Nodes(dataset)
+table = Table(dataset)
+table.raw_print()
